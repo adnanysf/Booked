@@ -91,7 +91,7 @@ const getIcon = (routeName, isFocused) => {
               { color: isFocused ? '#9b4615' : '#A9A9A9' },
               // {borderTopColor: isFocused ? '#9b4615' : '#fff', borderTopWidth: 2}
             ]}>
-              {label}
+              {label && "time" === route.name ? '' : label}
             </Text>
           </PlatformPressable>
         );
