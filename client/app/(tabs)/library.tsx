@@ -1,59 +1,51 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, StyleSheet, StatusBar } from 'react-native';
+import books from '../../assets/books/books.json';
 
 export default function Library() {
-  const [shelf, setShelf] = useState(false);
-  const opacity = useRef(new Animated.Value(0)).current;
+  interface Book {
+    title: string;
+    image: string;
+    top: number; 
+    left: number;
+  }
+
+  const [currBooks, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    if (shelf) {
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [shelf]);
-
-  const shelfPopUp = () => {
-    return (
-      <View style={styles.shelfPopUp}>
-        <Image
-          style={{ zIndex: 101 }}
-          source={require('../../assets/images/zoom shelf.png')}
-        />
-      </View>
-    );
-  };
-
-  const BlurredBackground = () => {
-    return (
-      <TouchableWithoutFeedback onPress={() => setShelf(false)}>
-        <Animated.View style={[styles.blurredBackground, { opacity }]} />
-      </TouchableWithoutFeedback>
-    );
-  };
+    // Initialize books with positions
+    const booksWithPositions = books.books.map((book, index) => ({
+      ...book,
+    }));
+    setBooks(booksWithPositions);
+  }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
+      
+      {/* Background Image */}
       <Image
         style={styles.backgroundImage}
         resizeMode="cover"
         source={require('../../assets/images/Untitled (393 x 852 px) (1) 1.png')}
       />
-      {shelf && <BlurredBackground />}
-      <View style={styles.content}>
-        {shelf && shelfPopUp()}
-        <TouchableOpacity onPress={() => setShelf(!shelf)} style={styles.shelf}>
-        </TouchableOpacity>
-      </View>
+      
+      {/* Render Books */}
+      {currBooks.map((book, index) => (
+        <View key={index} style={[styles.bookContainer, { top: book.top, left: book.left }]}>
+          {book.image ? (
+            <Image
+              style={styles.book}
+              source={{ uri: book.image }}
+            />
+          ) : (
+            <View style={styles.placeholderBook}>
+              <View style={styles.placeholderText} />
+            </View>
+          )}
+        </View>
+      ))}
     </View>
   );
 }
@@ -65,31 +57,29 @@ const styles = StyleSheet.create({
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
   },
-  blurredBackground: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 99,
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  shelf: {
-    width: "55%",
-    height: "37%",
-    // backgroundColor: 'rgba(255,255,255,0.5)',
-    marginBottom: "35%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
-  },
-  shelfPopUp: {
+  bookContainer: {
     position: 'absolute',
-    width: "90%",
-    height: "50%",
-    zIndex: 100,
+    width: '12%',
+    height: '8%',
+  },
+  book: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+    // borderRadius: 5,
+  },
+  placeholderBook: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+    // borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  placeholderText: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'lightgray',
+    // borderRadius: 5,
   },
 });

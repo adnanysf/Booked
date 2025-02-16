@@ -2,28 +2,39 @@
   "books": [
     {
       "title": "The Great Gatsby",
-      "image": ""
-      
+      "image": "",
+      "top": 180.61,
+      "left": 100.91
     },
     {
       "title": "To Kill a Mockingbird",
-        "image": ""
+      "image": "",
+      "top": 180.61,
+      "left": 170.91
     },
     {
       "title": "1984",
-        "image": ""
+      "image": "",
+      "top": 180.61,
+      "left": 240.91
     },
     {
       "title": "Pride and Prejudice",
-        "image": ""
+      "image": "",
+      "top": 270.50,
+      "left": 100.91
     },
     {
       "title": "The Catcher in the Rye",
-      "image": ""
+      "image": "",
+      "top": 270.50,
+      "left": 170.91
     },
     {
       "title": "The Hobbit",
-        "image": ""
+      "image": "",
+      "top": 270.50,
+      "left": 240.91
     }
   ]
 }
