@@ -1,7 +1,27 @@
-import React from 'react';
-import { View, Image, StyleSheet, Text, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 
 export default function Library() {
+  const [shelf, setShelf] = useState(false);
+
+  const shelfPopUp = () => {
+    return (
+      <View style={styles.shelfPopUp}>
+        <Image
+          style={{zIndex: 101}}
+          source={require('../../assets/images/zoom shelf.png')}
+        />
+      </View>
+    );
+  };
+
+  const BlurredBackground = () => {
+    return (
+      <View style={styles.blurredBackground}>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -10,8 +30,11 @@ export default function Library() {
         resizeMode="cover"
         source={require('../../assets/images/Untitled (393 x 852 px) (1) 1.png')}
       />
+      {shelf && <BlurredBackground />}
       <View style={styles.content}>
-        <Text>Library Screen</Text>
+        {shelf && shelfPopUp()}
+        <TouchableOpacity onPress={() => setShelf(!shelf)} style={styles.shelf}>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -24,10 +47,31 @@ const styles = StyleSheet.create({
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
   },
+  blurredBackground: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    zIndex: 99,
+  },
   content: {
-    borderColor: '1px solid red',
     flex: 1,
-    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  shelf: {
+    width: "55%",
+    height: "37%",
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    marginBottom: "35%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
+  shelfPopUp: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    width: "90%",
+    height: "50%",
+    zIndex: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
