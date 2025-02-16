@@ -34,14 +34,12 @@ export default function Library() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
       
-      {/* Background Image */}
       <Image
         style={styles.backgroundImage}
         resizeMode="cover"
         source={require('../../assets/images/Untitled (393 x 852 px) (1) 1.png')}
       />
       
-      {/* Render Books */}
       {currBooks.map((book, index) => (
         <View key={index} style={[styles.bookContainer, { top: book.top, left: book.left }]}>
           {book.image ? (
