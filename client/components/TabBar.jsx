@@ -21,8 +21,13 @@ const getIcon = (routeName, isFocused) => {
       return <Firshome width={iconSize} height={iconSize} fill={iconFillColor} />;
     case 'library':
       return <Fissbook width={iconSize} height={iconSize} fill={iconFillColor} />;
-    case 'time':
-      return <Firshourglassend width={iconSize} height={iconSize} fill={iconFillColor} />;
+      case 'time':
+        return (
+          <View style={styles.addButtonWrapper}>
+            <Ellipse1 style={styles.addButtonCircle} width={iconSize*2.5} height={iconSize*2.5} />
+            <Firshourglassend style={styles.hourglassIcon} width={iconSize} height={iconSize} fill={iconFillColor} />
+          </View>
+      );
     case 'friends':
       return <Firsworld width={iconSize} height={iconSize} fill={iconFillColor} />;
     case 'account':
@@ -32,7 +37,30 @@ const getIcon = (routeName, isFocused) => {
   }
 };
 
-  
+// const getIcon = (routeName, isFocused) => {
+//   const iconFillColor = isFocused ? '#9b4615' : '#A9A9A9'; // Active: Brown, Inactive: Gray
+//   const iconSize = 25; // Icon size
+
+//   switch (routeName) {
+//     case 'index': // Home
+//       return <Firshome width={iconSize} height={iconSize} fill={iconFillColor} />;
+//     case 'library': // Library
+//       return <Fissbook width={iconSize} height={iconSize} fill={iconFillColor} />;
+    // case 'add': // Add (Special Center Button)
+    //   return (
+    //     <View style={styles.addButtonWrapper}>
+    //       <Ellipse1 style={styles.addButtonCircle} width={60} height={60} />
+    //       <Firshourglassend width={30} height={30} fill={iconFillColor} />
+    //     </View>
+    //   );
+//     case 'friends': // Friends
+//       return <Firsworld width={iconSize} height={iconSize} fill={iconFillColor} />;
+//     case 'account': // Account
+//       return <Firsuser width={iconSize} height={iconSize} fill={iconFillColor} />;
+//     default:
+//       return null;
+//   }
+// };  
 
   return (
     <View style={styles.tabBar}>
@@ -79,16 +107,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabLabel: {
-    fontSize: 12,
+    fontSize: 15,
     marginTop: 5,
   },
   addButtonWrapper: {
+    position: 'absolute',
+    bottom: 30, // Increase this to raise the button higher
+    alignSelf: 'center', // Center it horizontally
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 10, // Ensure it stays above other elements
+    
   },
-  hourglassIcon: {
-    position: 'absolute',
+  addButtonCircle: {
+    borderRadius: 35, // Half of the width/height to keep the circle
+    backgroundColor: '#fff',
+    elevation: 5, // Shadow for elevation
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
   },
+  
 });
 
 export default TabBar;
