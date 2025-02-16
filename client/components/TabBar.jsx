@@ -18,22 +18,27 @@ const getIcon = (routeName, isFocused) => {
 
   switch (routeName) {
     case 'home':
-      return <Firshome width={iconSize} height={iconSize} fill={iconFillColor} />;
-    case 'library':
-      return <Fissbook width={iconSize} height={iconSize} fill={iconFillColor} />;
+      return (
+        <View style={{ color: iconFillColor }}>
+          <Firshome width={iconSize} height={iconSize} style={{color: iconFillColor, fill: iconFillColor}} />
+        </View>
+      )
+      case 'account':
+        return <Firsuser width={iconSize} height={iconSize} color={iconFillColor} />;
+      default:
+
       case 'time':
         return (
-          <View style={styles.addButtonWrapper}>
+          <View style={[styles.addButtonWrapper, { color: isFocused ? '#ffff' : '#ffff', fill: isFocused ? '#ffff' : '#ffff'}]}>
             <Ellipse1 style={styles.addButtonCircle} width={iconSize*2.5} height={iconSize*2.5} />
-            <Firshourglassend style={styles.hourglassIcon} width={iconSize} height={iconSize} fill={iconFillColor} />
+            <Firshourglassend style={[styles.hourglassIcon, {color: '#ffff'}]} width={iconSize} height={iconSize} />
           </View>
       );
     case 'friends':
-      return <Firsworld width={iconSize} height={iconSize} fill={iconFillColor} />;
-    case 'account':
-      return <Firsuser width={iconSize} height={iconSize} fill={iconFillColor} />;
-    default:
-      return null;
+      return <Firsworld width={iconSize} height={iconSize} color={iconFillColor} />;
+    case 'library':
+        return <Fissbook width={iconSize} height={iconSize} color={iconFillColor} />;
+    return null;
   }
 };
 
@@ -83,7 +88,8 @@ const getIcon = (routeName, isFocused) => {
             {getIcon(route.name, isFocused)}
             <Text style={[
               styles.tabLabel,
-              { color: isFocused ? '#9b4615' : '#A9A9A9' }
+              { color: isFocused ? '#9b4615' : '#A9A9A9' },
+              // {borderTopColor: isFocused ? '#9b4615' : '#fff', borderTopWidth: 2}
             ]}>
               {label}
             </Text>
@@ -98,13 +104,15 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     backgroundColor: '#fff',
-    height: 81,
+    height: 100,
     alignItems: 'center',
+    // marginBottom: 10,
   },
   tabItem: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 10,
   },
   tabLabel: {
     fontSize: 15,
@@ -112,22 +120,24 @@ const styles = StyleSheet.create({
   },
   addButtonWrapper: {
     position: 'absolute',
-    bottom: 30, // Increase this to raise the button higher
-    alignSelf: 'center', // Center it horizontally
+    bottom: 30,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 10, // Ensure it stays above other elements
-    
+    zIndex: 10, 
   },
   addButtonCircle: {
-    borderRadius: 35, // Half of the width/height to keep the circle
+    borderRadius: 35,
     backgroundColor: '#fff',
-    elevation: 5, // Shadow for elevation
+    elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
   },
+  hourglassIcon:{
+    position: 'absolute',
+  }
   
 });
 
