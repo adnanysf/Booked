@@ -24,7 +24,7 @@ const getIcon = (routeName, isFocused) => {
         </View>
       )
       case 'account':
-        return <Firsuser width={iconSize} height={iconSize} color={iconFillColor} />;
+        return <Firsuser width={iconSize} height={iconSize} style={{color: iconFillColor, fill: iconFillColor}} />;
       default:
 
       case 'time':

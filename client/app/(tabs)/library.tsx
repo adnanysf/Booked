@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
-import { View, Image, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Image, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 
 export default function Library() {
   const [shelf, setShelf] = useState(false);
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (shelf) {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [shelf]);
 
   const shelfPopUp = () => {
     return (
       <View style={styles.shelfPopUp}>
         <Image
-          style={{zIndex: 101}}
+          style={{ zIndex: 101 }}
           source={require('../../assets/images/zoom shelf.png')}
         />
       </View>
@@ -17,8 +34,9 @@ export default function Library() {
 
   const BlurredBackground = () => {
     return (
-      <View style={styles.blurredBackground}>
-      </View>
+      <TouchableWithoutFeedback onPress={() => setShelf(false)}>
+        <Animated.View style={[styles.blurredBackground, { opacity }]} />
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -49,7 +67,7 @@ const styles = StyleSheet.create({
   },
   blurredBackground: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 99,
   },
   content: {
@@ -60,7 +78,7 @@ const styles = StyleSheet.create({
   shelf: {
     width: "55%",
     height: "37%",
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    // backgroundColor: 'rgba(255,255,255,0.5)',
     marginBottom: "35%",
     justifyContent: 'center',
     alignItems: 'center',
@@ -68,7 +86,6 @@ const styles = StyleSheet.create({
   },
   shelfPopUp: {
     position: 'absolute',
-    backgroundColor: 'red',
     width: "90%",
     height: "50%",
     zIndex: 100,
