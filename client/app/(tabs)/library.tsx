@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, StatusBar } from 'react-native';
-// import books from '../../assets/books/books.json';
+import books from '../../assets/books/books.json';
 
 export default function Library() {
   interface Book {
@@ -13,21 +13,11 @@ export default function Library() {
   const [currBooks, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    fetch ("https://6869-164-58-12-125.ngrok-free.app/userLibrary",
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: 'adnanthereader',
-      }),
-    }
-    ).then((response) => {
-      return response.json();
-    }).then((data) => {
-      setBooks(data.books);
-    })
+    // Initialize books with positions
+    const booksWithPositions = books.books.map((book, index) => ({
+      ...book,
+    }));
+    setBooks(booksWithPositions);
   }, []);
 
   return (
