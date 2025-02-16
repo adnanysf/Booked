@@ -98,30 +98,3 @@ app.post('/userLibrary', async (req, res) => {
   }
 });
 
-app.post('/getFreeSlots', async (req, res) => {
-  const { startDateTime, endDateTime } = req.body; // User-provided range
-
-  try {
-    await ensureAccessToken(); // Ensure access token is valid
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-
-    const events = await calendar.events.list({
-      calendarId: 'primary',
-      timeMin: startDateTime,
-      timeMax: endDateTime,
-      singleEvents: true,
-      orderBy: 'startTime',
-    });
-
-    const busySlots = events.data.items.map(event => ({
-      start: event.start.dateTime || event.start.date,
-      end: event.end.dateTime || event.end.date,
-    }));
-
-    res.status(200).json({ busySlots });
-  } catch (error) {
-    console.error('Error fetching calendar events:', error);
-    res.status(500).send('Error fetching calendar events');
-  }
-});
-
