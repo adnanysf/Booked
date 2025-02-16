@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, Modal, TouchableOpacity, Text, StatusBar } from 'react-native';
 
-const LibraryModal = ({ isVisible, onClose, books }) => {
+const LibraryModal = ({ isVisible, onClose, books, name }) => {
   return (
     <Modal
       animationType="slide"
@@ -16,6 +16,11 @@ const LibraryModal = ({ isVisible, onClose, books }) => {
           resizeMode="cover"
           source={require('../assets/images/Untitled (393 x 852 px) (1) 1.png')}
         />
+        <View style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, marginTop: 20 }}>
+        <Text style={{ fontSize: 30, textAlign: 'center', marginVertical: 20, fontWeight: 'bold' }}>{name}'s Library!</Text>
+
+        </View>
+
         {books.map((book, index) => (
           <View key={index} style={[styles.bookContainer, { top: book.top, left: book.left }]}>
             {book.image ? (

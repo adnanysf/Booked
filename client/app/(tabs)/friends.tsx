@@ -7,6 +7,7 @@ export default function Friends() {
   const [friends, setFriends] = useState<{ name: string; username: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFriendLibrary, setSelectedFriendLibrary] = useState([]);
+  const [selectFriend, setSelectFriend] = useState('');
 
   useEffect(() => {
     fetch("https://3c05c57d564d.ngrok.app/users", {
@@ -25,7 +26,6 @@ export default function Friends() {
   }, []);
 
   const getLibrary = (friend: { name: string; username: string }) => {
-    console.log("REACHED")
     fetch("https://3c05c57d564d.ngrok.app/userLibrary", {
       method: 'POST',
       headers: {
@@ -38,6 +38,7 @@ export default function Friends() {
       .then((response) => response.json())
       .then((data) => {
         setSelectedFriendLibrary(data.books);
+        setSelectFriend(friend.name);
         setIsModalVisible(true);
       })
       .catch((error) => {
@@ -67,6 +68,7 @@ export default function Friends() {
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
         books={selectedFriendLibrary}
+        name={selectFriend}
       />
     </View>
   );
