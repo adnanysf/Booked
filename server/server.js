@@ -4,11 +4,12 @@ require('dotenv').config();
 const { google } = require('googleapis');
 const OpenAI = require('openai');
 const mongodbpass = process.env.MONGOODPPASSWORD
+const mongodburi = process.env.MONGODBURI
 
 const express = require('express');
 const cors = require('cors');
 //add mongodb connection string
-const uri = "mongodb+srv://admin:" + mongodbpass + "@bookcluster.knhby.mongodb.net/";
+const uri = mongodburi;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
