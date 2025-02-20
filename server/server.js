@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const { google } = require('googleapis');
 const OpenAI = require('openai');
-
+const mongodbpass = process.env.MONGOODPPASSWORD
 
 const express = require('express');
 const cors = require('cors');
-const uri = "mongodb+srv://user:dbpass@bookcluster.knhby.mongodb.net/?retryWrites=true&w=majority&appName=BookCluster";
+//add mongodb connection string
+const uri = "mongodb+srv://admin:" + mongodbpass + "@bookcluster.knhby.mongodb.net/";
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
